@@ -1,28 +1,43 @@
 import React from "react";
 import { Card, Col, Row, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
+
 const Student = ({ stuentDetails: student }) => {
+
   return (
-    <Card className="my-3 p-3 rounded">
+    <Card className="soft-card my-3 p-3 h-100">
       <Link to={`/student/${student._id}`}>
-        <Image src={student.image} rounded fluid />
+        <Image
+          src="/images/hostel.jpg"
+          rounded
+          fluid
+          alt={student.name}
+          style={{ height: "180px", objectFit: "cover", width: "100%" }}
+        />
       </Link>
-      <Card.Body>
-        <Link to={`/student/${student._id}`}>
-          <Card.Title as="div">
-            <strong>{student.name}</strong>
+
+      <Card.Body className="d-flex flex-column">
+        <Link to={`/student/${student._id}`} className="text-decoration-none">
+          <Card.Title as="h5" className="mb-2">
+            {student.name}
           </Card.Title>
         </Link>
 
-        <Row>
-          <Col>Room No: {student.roomNo}</Col>
+        <Row className="mb-1">
+          <Col className="text-muted">Room:</Col>
+          <Col className="fw-bold">{student.roomNo}</Col>
         </Row>
-        <Row>
-          <Col>Stream: {student.category}</Col>
+
+        <Row className="mb-1">
+          <Col className="text-muted">Stream:</Col>
+          <Col className="fw-bold">{student.category}</Col>
         </Row>
-        <Card.Text>
-          Contact:
-          <a href={`tel:${student.contact}`}>{student.contact}</a>
+
+        <Card.Text className="mt-auto">
+          <small className="text-muted">Contact</small><br />
+          <a href={`tel:${student.contact}`} className="fw-bold text-dark">
+            {student.contact}
+          </a>
         </Card.Text>
       </Card.Body>
     </Card>

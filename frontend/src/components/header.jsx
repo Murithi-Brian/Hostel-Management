@@ -8,54 +8,61 @@ import { logout } from "../actions/userActions";
 
 const Header = ({ history }) => {
   const dispatch = useDispatch();
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const { userInfo } = useSelector((state) => state.userLogin);
 
   const logoutHandler = () => {
     dispatch(logout());
     history.push("/login");
   };
+
   return (
     <header>
-      <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
+      <Navbar expand="lg" variant="dark" collapseOnSelect className="navbar-custom shadow-sm">
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>NSD Solutions</Navbar.Brand>
+            <Navbar.Brand className="fw-bold">
+               Hostel Management
+            </Navbar.Brand>
           </LinkContainer>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
+
+          <Navbar.Toggle aria-controls="navbar" />
+          <Navbar.Collapse id="navbar">
             <Route render={({ history }) => <SearchBox history={history} />} />
-            <Nav className="ml-auto">
-              <NavDropdown title="More">
+
+            <Nav className="ms-auto align-items-center">
+              <NavDropdown title="Dashboard" className="me-2">
                 <LinkContainer to="/attendance">
-                  <NavDropdown.Item>Attendance</NavDropdown.Item>
+                  <NavDropdown.Item>📋 Attendance</NavDropdown.Item>
                 </LinkContainer>
                 <LinkContainer to="/addStudent">
-                  <NavDropdown.Item>Add Student</NavDropdown.Item>
+                  <NavDropdown.Item>➕ Add Student</NavDropdown.Item>
                 </LinkContainer>
                 <LinkContainer to="/analysis">
-                  <NavDropdown.Item>View Analysis</NavDropdown.Item>
+                  <NavDropdown.Item>📊 Analysis</NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>
+
               {userInfo ? (
-                <NavDropdown title={userInfo.name} id="username">
+                <NavDropdown title={`👤 ${userInfo.name}`} id="username">
                   <LinkContainer to="/profile">
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
+                    <NavDropdown.Item>My Profile</NavDropdown.Item>
                   </LinkContainer>
+
                   {userInfo.isAdmin && (
                     <LinkContainer to="/userList">
-                      <NavDropdown.Item>Users List</NavDropdown.Item>
+                      <NavDropdown.Item>Manage Users</NavDropdown.Item>
                     </LinkContainer>
                   )}
+
+                  <NavDropdown.Divider />
+
                   <NavDropdown.Item onClick={logoutHandler}>
-                    Logout
+                    🚪 Logout
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (
                 <LinkContainer to="/login">
-                  <Nav.Link>
-                    <i className="fas fa-user"></i> Sign In
-                  </Nav.Link>
+                  <Nav.Link>🔐 Sign In</Nav.Link>
                 </LinkContainer>
               )}
             </Nav>
